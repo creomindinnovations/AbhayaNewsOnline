@@ -1,0 +1,5 @@
+[build]
+  # No build command is needed for this static project
+  command = ""
+  # Serve files from the current directory (relative to the base directory)
+  publish = "."

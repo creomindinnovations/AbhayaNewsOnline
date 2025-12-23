@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhaya News</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="slider.css">
+    <link rel="icon" href="assests/logo2.png" type="image/jpeg">
+    <style>
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .breaking-news-item {
+            margin-right: 150px;
+            font-size: 15px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+            position: relative;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .breaking-news-item::before {
+            content: '🔴';
+            margin-right: 15px;
+            font-size: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .breaking-news-item::after {
+            content: '|';
+            position: absolute;
+            right: -75px;
+            color: #fbbf24;
+            font-weight: bold;
+            font-size: 18px;
+            opacity: 0.7;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* Magazine CTA */
+        .magazine-btn {
+            display: inline-block;
+            background: #e11d48;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(225,29,72,0.18);
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+        .magazine-btn:hover {
+            transform: translateY(-3px);
+            background: #be123c;
+            text-decoration: none;
+        }
+        @media (max-width: 600px) {
+            .magazine-btn { padding: 8px 12px; font-size: 14px; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Popup News Modal -->
+    <div id="popupNewsModal" class="popup-news-modal">
+        <div class="popup-news-overlay"></div>
+        <div class="popup-news-content">
+            <button class="popup-close-btn" id="closePopupNews">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-news-body">
+                <div class="popup-news-image">
+                    <img id="popupNewsImage" src="" alt="Breaking News">
+                    <div class="popup-news-badge">
+                        <i class="fas fa-bolt"></i>
+                        BREAKING NEWS
+                    </div>
+                </div>
+                <div class="popup-news-text">
+                    <h2 id="popupNewsTitle">Latest Breaking News</h2>
+                    <p id="popupNewsDescription">Stay updated with the most important news happening right now.</p>
+                    <div class="popup-news-actions">
+                        <a id="popupNewsLink" href="#" class="popup-read-more-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            Read Full Story
+                        </a>
+                        <a id="popupVideoLink" href="#" class="popup-video-btn" style="display: none;">
+                            <i class="fas fa-play"></i>
+                            Watch Video
+                        </a>
+                    </div>
+                    <div class="popup-news-meta">
+                        <span id="popupNewsDate"></span>
+                        <span class="popup-news-source">Abhaya News</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header id="navbar">
+        <!-- Navbar will be loaded here by JavaScript -->
+    </header>
+
+    <!-- Breaking News Ticker -->
+    <section class="breaking-news" id="breakingNews"
+        style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; overflow: hidden; position: relative; box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3); border-bottom: 3px solid #991b1b;">
+        <div class="breaking-news-container"
+            style="display: flex; align-items: center; height: 50px; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="breaking-news-label"
+                style="background: #991b1b; color: white; padding: 12px 20px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-radius: 0 25px 25px 0; margin-right: 20px; white-space: nowrap; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+                <i class="fas fa-bolt" style="margin-right: 8px;"></i>
+                Breaking News
+            </div>
+            <div class="breaking-news-content"
+                style="flex: 1; overflow: hidden; position: relative; height: 100%; display: flex; align-items: center;">
+                <div class="breaking-news-ticker" id="breakingNewsTicker"
+                    style="display: flex; animation: scroll-left 60s linear infinite; white-space: nowrap;">
+                    <!-- Breaking news items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <main>
+        <!-- Banner Slider Section -->
+        <section class="banner-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <!-- Slider content will be loaded dynamically -->
+                    <div class="loading">Loading latest news...</div>
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <!-- Dots will be generated dynamically -->
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 12px;">
+                <a class="magazine-btn" href="https://heyzine.com/flip-book/314c87ac87.html" target="_blank" rel="noopener noreferrer" aria-label="Read our magzine">
+                    <i class="fas fa-book-open" style="margin-right: 8px;"></i> Read our magzine
+                </a>
+            </div>
+        </section>
+
+        <div class="container">
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for news, topics, or keywords...">
+                    <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Media layout: Featured Videos (left, 60%) + Latest News (right, 40%) -->
+            <div class="media-layout">
+                <div class="media-left">
+                    <section class="youtube-videos-section">
+                        <h2 class="section-title"><i class="fab fa-youtube"></i> Featured Videos</h2>
+                        <div class="youtube-videos-grid" id="youtubeVideosGrid">
+                            <!-- YouTube videos will be loaded here -->
+                            <div class="loading">Loading videos...</div>
+                        </div>
+                        <div class="view-more-container">
+                            <button id="loadMoreVideos" class="view-more-btn">Load More Videos</button>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="media-right">
+                    <section class="latest-news-section">
+                        <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest News</h2>
+                        <div class="news-scroll-wrapper">
+                            <button id="scrollLeft" class="scroll-arrow left"><i class="fas fa-chevron-left"></i></button>
+                            <div class="news-grid">
+                                <!-- News articles will be loaded here -->
+                                <div class="loading">Loading news...</div>
+                            </div>
+                            <button id="scrollRight" class="scroll-arrow right"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+
+                        <div class="pagination">
+                            <button id="prevPage" disabled>Previous</button>
+                            <span id="currentPage">Page 1</span>
+                            <button id="nextPage">Next</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Trending Section -->
+
+            <section class="trending-section">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Trending Now</h2>
+                <div class="trending-grid">
+                    <!-- Trending content will be loaded dynamically -->
+                    <div class="loading">Loading trending news...</div>
+                </div>
+            </section>
+
+            <!-- Category Highlights -->
+            <!-- <section class="category-highlights"> -->
+            <!-- Category highlights will be loaded dynamically -->
+            <!-- <div class="loading">Loading category highlights...</div> -->
+            <!-- </section> -->
+
+
+        </div>
+    </main>
+
+    <!-- Enhanced Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required
+                        autocomplete="current-password">
+                </div>
+                <button type="submit">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <div class="login-footer">
+                    <p><i class="fas fa-shield-alt"></i> Secure admin access only</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Saved News Modal -->
+    <div id="savedNewsModal" class="modal">
+        <div class="modal-content news-detail">
+            <span class="close" id="closeSavedModal">&times;</span>
+            <h2 style="padding: 20px; border-bottom: 1px solid #eee;"><i class="fas fa-bookmark"></i> Saved Articles</h2>
+            <div id="savedNewsContent" class="news-grid" style="padding: 20px; max-height: 70vh; overflow-y: auto;">
+                <!-- Saved news will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- News Detail Modal -->
+    <div id="newsDetailModal" class="modal">
+        <div class="modal-content news-detail">
+            <span class="close">&times;</span>
+            <div id="newsDetailContent">
+                <!-- News detail will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Video Modal -->
+    <div id="youtubeVideoModal" class="youtube-video-modal">
+        <div class="youtube-video-modal-content">
+            <span class="close" id="closeYoutubeModal">&times;</span>
+            <div class="youtube-video-iframe-container" id="youtubeVideoContainer">
+                <!-- YouTube iframe will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Stay updated with the latest news and exclusive content delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Action Button for Saved News -->
+    <div class="fab-container">
+        <button id="savedNewsBtn" class="fab-btn" title="View Saved Articles">
+            <i class="fas fa-bookmark"></i>
+        </button>
+    </div>
+
+    <footer id="footer">
+        <!-- Footer will be loaded here by JavaScript -->
+    </footer>
+
+
+
+    <script src="toast.js" type="module"></script>
+    <script src="components.js" type="module"></script>
+    <script src="slider.js" type="module"></script>
+    <script src="breaking-news.js" type="module"></script>
+    <script src="popup-news.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+    <script src="category.js" type="module"></script>
+    <script src="youtube-videos.js" type="module"></script>
+    <script>
+        // Make category cards in the home page clickable and navigate to category pages
+        document.addEventListener('DOMContentLoaded', function () {
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Find which category section this card belongs to
+                    const categorySection = card.closest('.category-row');
+                    const categoryHeader = categorySection.querySelector('.category-header');
+                    const viewAllLink = categoryHeader.querySelector('.view-all');
+
+                    // Navigate to the category page
+                    if (viewAllLink && viewAllLink.href) {
+                        window.location.href = viewAllLink.href;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

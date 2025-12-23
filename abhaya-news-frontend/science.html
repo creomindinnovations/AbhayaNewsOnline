@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science News - Abhaya News</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assests/logo2.png" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="slider.css">
+</head>
+
+<body>
+    <header id="navbar">
+        <!-- Navbar will be loaded here by JavaScript -->
+    </header>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <main>
+        <!-- Science Banner Slider -->
+        <section class="banner-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <!-- Slider content will be loaded dynamically -->
+                    <div class="loading">Loading latest science news...</div>
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <!-- Dots will be generated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Trending Science News -->
+            <section class="trending-section">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Trending in Science</h2>
+                <div class="trending-grid">
+                    <!-- Trending content will be loaded dynamically -->
+                    <div class="loading">Loading trending science news...</div>
+                </div>
+            </section>
+
+            <!-- Latest Science News -->
+            <section class="latest-news-section">
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest Science News</h2>
+                <div class="news-grid">
+                    <!-- News articles will be loaded here -->
+                    <div class="loading">Loading science news...</div>
+                </div>
+
+                <div class="pagination">
+                    <button id="prevPage" disabled>Previous</button>
+                    <span id="currentPage">Page 1</span>
+                    <button id="nextPage">Next</button>
+                </div>
+            </section>
+
+            <!-- Science Insights Section -->
+            <section class="category-highlights">
+                <div class="category-header">
+                    <h2 class="section-title"><i class="fas fa-microscope"></i> Research Highlights</h2>
+                </div>
+                <div class="category-cards">
+                    <div class="category-card">
+                        <img src="https://source.unsplash.com/random/400x250/?laboratory" alt="Lab Research">
+                        <div class="category-card-content">
+                            <h3>Gene Therapy Advances Promise New Treatment Options</h3>
+                            <p>Cutting-edge genetic research opens doors to treating previously incurable diseases.</p>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://source.unsplash.com/random/400x250/?artificial-intelligence"
+                            alt="AI Research">
+                        <div class="category-card-content">
+                            <h3>AI Accelerates Scientific Discovery Process</h3>
+                            <p>Machine learning algorithms help researchers identify patterns and make breakthroughs
+                                faster.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Science Newsletter</h2>
+                <p>Get the latest scientific discoveries and research updates delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <!-- Footer will be loaded here by JavaScript -->
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- News Detail Modal -->
+    <div id="newsDetailModal" class="modal">
+        <div class="modal-content news-detail">
+            <span class="close">&times;</span>
+            <div id="newsDetailContent">
+                <!-- News detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="toast.js" type="module"></script>
+    <script src="components.js" type="module"></script>
+    <script src="slider.js" type="module"></script>
+    <script src="category.js" type="module"></script>
+</body>
+
+</html>
